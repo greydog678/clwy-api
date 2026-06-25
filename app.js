@@ -4,13 +4,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
+// 在所有的路由前面加
+require('dotenv').config();
+
 // 导入中间件
 const adminAuth = require('./middlewares/auth');
 const userAuth = require('./middlewares/user-auth');
 
-
-// 在所有的路由前面加
-require('dotenv').config();
 
 // 导入路由
 // 前台路由文件
