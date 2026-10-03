@@ -4,8 +4,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 
-// 在所有的路由前面加
-require('dotenv').config();
+// 加载环境变量并在导入路由、打开监听端口前校验签名密钥。
+require('./config/auth');
 
 // 导入中间件
 const adminAuth = require('./middlewares/auth');

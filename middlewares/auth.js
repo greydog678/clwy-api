@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { secret } = require('../config/auth');
 const { User } = require('../models');
 const { UnauthorizedError } = require('../utils/errors');
 const { success, failure } = require('../utils/responses');
@@ -13,7 +14,7 @@ module.exports = async (req, res, next) => {
         const token = authorization.replace('Bearer ', '');
 
         // 验证token是否正确
-        const decoded = jwt.verify(token, process.env.SECRET);
+        const decoded = jwt.verify(token, secret, { algorithms: ['HS256'] });
         // 从jwt中，解析出之前存入的userId
         const { userId } = decoded;
 

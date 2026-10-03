@@ -5,6 +5,7 @@ const { success, failure } = require('../utils/responses');
 const { NotFoundError, BadRequestError, UnauthorizedError } = require("../utils/errors");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { secret } = require('../config/auth');
 const { Op } = require("sequelize");
 
 // 用户注册
@@ -62,7 +63,7 @@ router.post('/sign_in', async (req, res) => {
         // 生成身份验证令牌
         const token = jwt.sign({
             userId: user.id
-        }, process.env.SECRET, {expiresIn: '30d'});
+        }, secret, {algorithm: 'HS256', expiresIn: '30d'});
         success(res, '登录成功', {token});
     }catch(error) {
         failure(res, error);
