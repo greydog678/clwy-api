@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "security:check": "node scripts/check-secrets.js"
   },
   "dependencies": {
     "@types/node": "^25.5.0",

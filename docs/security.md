@@ -48,6 +48,14 @@ git filter-repo --sensitive-data-removal --invert-paths --path .env --path confi
 
 本次仅新增普通修复提交，**未执行远端强制推送或历史改写**。
 
+## 自动回归检查
+
+提交前运行 `npm run security:check`，检查 Git 索引中是否重新出现环境文件、非空密钥模板或旧版 `config/config.json`。检查只报告路径与变量名，不输出凭据值；它检查当前索引，不能证明历史或部署环境已经清理。
+
+GitHub Actions 会在 main 推送及 PR 时运行该检查和 `npm test`，使用锁文件安装依赖并禁用安装脚本。新增测试实际加载 dotenv，覆盖仓库根路径、注入变量优先级及空注入值拒绝启动。GitHub Actions 不读取或轮换部署密钥。
+
+维护者应在分支规则中将 `security` 检查设为合并条件；仅添加工作流不会自动启用分支保护。
+
 ## 防止再次提交
 
 - 只跟踪空值模板。提交前运行 `git ls-files .env`（应无输出），用 `git check-ignore -v --no-index .env .env.production` 验证忽略规则，避免强制添加环境文件。
