@@ -21,6 +21,7 @@ const articlesRouter = require('./routes/articles');
 const settingsRouter = require('./routes/settings');
 const searchRouter = require('./routes/search');
 const authRouter = require('./routes/auth');
+const likesRouter = require('./routes/likes');
 
 // 后端路由
 const adminArticlesRouter = require('./routes/admin/articles');
@@ -53,6 +54,7 @@ app.use('/articles', articlesRouter);
 app.use('/settings', settingsRouter);
 app.use('/search', searchRouter);
 app.use('/auth', authRouter);
+app.use('/likes', userAuth, likesRouter);
 
 
 

@@ -7,8 +7,10 @@ const {
 
 
 
+
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
+    /** @param {SeqModels} models */
     static associate(models) {
       models.Course.belongsTo(models.Category, {
         foreignKey: 'categoryId',
@@ -24,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'courseId',
         as: 'chapters'
       });
+      models.Course.belongsToMany(models.User, {through: models.Like, foreignKey: 'courseId', as: 'likeUsers'});
+      
+      
+      
     }
   }
 
