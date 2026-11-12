@@ -6,15 +6,13 @@ const { BadRequestError, UnauthorizedError, NotFoundError } = require('../../uti
 const { success, failure } = require('../../utils/responses');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { secret } = require('../../config/auth');
 /**
  * 管理员登录
  * POST /admin/auth/sign_in
  */
 router.post('/sign_in', async (req, res) => {
     try {
-        // 生成32位随机字符串
-
-
         // 1. 接收数据  login可以是邮箱，也可以是用户名
         const { login, password } = req.body;
 
@@ -62,7 +60,7 @@ router.post('/sign_in', async (req, res) => {
         // expiresIn  有效期   30d  d是天
         const token = jwt.sign({
                 userId: user.id
-            }, process.env.SECRET, { expiresIn: '30d' }
+            }, secret, { algorithm: 'HS256', expiresIn: '30d' }
         );
         success(res, '登录成功', {token});
 
